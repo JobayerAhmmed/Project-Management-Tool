@@ -1,0 +1,65 @@
+﻿@model ProjectManagementTool.ViewModels.AssignPersonViewModel
+
+@{
+    ViewBag.Title = "- Assign Resource Person";
+}
+
+<h2>Assign Resource Person</h2>
+
+@using (Html.BeginForm("AssignPerson", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.ProjectId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(m => m.ProjectId, Model.Projects, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.DropDownListFor(m => m.UserId, Model.Users, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Save" />
+            </div>
+        </div>
+}
+<hr />
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<table class="table table-responsive table-bordered">
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Resource Person</th>
+            <th>Designation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ResourcePersons)
+        {
+            <tr>
+                <td>
+                    @item.ProjectName
+                </td>
+                <td>
+                    @item.ResourcePerson
+                </td>
+                <td>@item.Designation</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
